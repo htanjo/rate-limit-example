@@ -1,12 +1,14 @@
 const request = require('request-promise');
 const { RateLimiter } = require('limiter');
+const log = require('./log');
+
 const limiter = new RateLimiter(2, 'second');
 
 function getComment(id) {
-  console.log(`call ${id}`);
+  log(id, 'added');
   return new Promise((resolve, reject) => {
     limiter.removeTokens(1, (err, remainingRequests) => {
-      console.log(`request ${id}`);
+      log(id, 'requesting');
       request({
         uri: `https://jsonplaceholder.typicode.com/comments/${id}`,
         json: true

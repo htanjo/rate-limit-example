@@ -1,17 +1,18 @@
 const request = require('request-promise');
 const Bottleneck = require('bottleneck');
+const log = require('./log');
 
-const maxConcurrent = 2;
+const maxConcurrent = 1;
 const delay = 500;
-const maxQueue = 3;
+const maxQueue = 5;
 const strategy = Bottleneck.strategy.OVERFLOW;
 
 const limiter = new Bottleneck(maxConcurrent, delay, maxQueue, strategy);
 
 function getComment(id) {
-  console.log(`call ${id}`);
+  log(id, 'added');
   return limiter.schedule(() => {
-    console.log(`request ${id}`);
+    log(id, 'requesting');
     return request({
       uri: `https://jsonplaceholder.typicode.com/comments/${id}`,
       json: true
@@ -19,6 +20,6 @@ function getComment(id) {
   }, id);
 }
 
-limiter.on('dropped', dropped => console.log(`drop ${dropped.args[0]}`));
+limiter.on('dropped', dropped => log(dropped.args[0], 'dropped'));
 
 module.exports = { getComment };
