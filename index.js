@@ -1,4 +1,4 @@
-const { getComment } = require('./client2');
+const { getComment } = require('./example-bottleneck');
 const log = require('./log');
 
 const ids = [1, 2, 'x', 4, 5, 6, 7, 8];
