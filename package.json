@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "rate-limit-example",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "bottleneck": "^1.16.0",
+    "limiter": "^1.1.2",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}
