@@ -2,15 +2,6 @@ const Table = require('cli-table');
 const logUpdate = require('log-update');
 const storedItems = [];
 
-function render(items) {
-  const table = new Table({
-    head: ['#', 'Status'],
-    colWidths: [3, 16]
-  });
-  table.push(...items.map(item => [item.id, item.status]));
-  logUpdate(table.toString());
-}
-
 function updateItems(items, id, status) {
   const foundItem = items.find(item => item.id === id);
   if (foundItem) {
@@ -19,6 +10,15 @@ function updateItems(items, id, status) {
     items.push({ id, status });
   }
   return items;
+}
+
+function render(items) {
+  const table = new Table({
+    head: ['#', 'Status'],
+    colWidths: [3, 16]
+  });
+  table.push(...items.map(item => [item.id, item.status]));
+  logUpdate(table.toString());
 }
 
 module.exports = (id, status) => {
